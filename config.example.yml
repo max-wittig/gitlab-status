@@ -1,0 +1,21 @@
+---
+timezone: Europe/Zurich
+default:
+  emoji: evergreen_tree
+  message:
+crons:
+  "0 7 * * 1-5":
+     emoji: house
+     message: "At home"
+  "0 8 * * 1-5":
+     emoji: office
+     message: "Available"
+  "30 11 * * 1-5":
+     emoji: hamburger
+     message: "At lunch"
+  "0 12 * * 1-5":
+     emoji: office
+     message: "Available"
+  "0 18 * * 1-5":
+     emoji: house_with_garden
+     message: "At home"
