@@ -64,14 +64,11 @@ func findCurrentShouldStatus(statusConfig *Config) (*StatusOptions, error) {
 func UpdateGitlabStatus(appOptions *appOptions, statusConfig *Config) error {
 	client := gitlab.NewClient(nil, appOptions.gitlabToken)
 	client.SetBaseURL(appOptions.gitlabURL)
-	currentStatus, err := findCurrentShouldStatus(statusConfig)
-	if err != nil {
-		return err
-	}
+	currentStatus, _ := findCurrentShouldStatus(statusConfig)
 	if currentStatus == nil {
 		currentStatus = &statusConfig.Default
 	}
-	err = SendUpdateRequest(client, currentStatus)
+	err := SendUpdateRequest(client, currentStatus)
 	return err
 }
 
