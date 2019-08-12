@@ -12,7 +12,7 @@ var GitCommit string
 var BuildDate string
 
 // Version is the main version number that is being run at the moment.
-const Version = "0.1.0"
+const Version = "0.1.1"
 
 // GoVersion is the current go runtime version
 var GoVersion = runtime.Version()
