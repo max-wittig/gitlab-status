@@ -55,7 +55,10 @@ func parseOptions() (*appOptions, error) {
 	}
 	aConfig.daemon = *daemonFlag
 
-	addEnvironmentVariables(&aConfig)
+	err := addEnvironmentVariables(&aConfig)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	return &aConfig, nil
 }
 
