@@ -74,6 +74,9 @@ func main() {
 	if appOptions.daemon {
 		ScheduleDaemons(appOptions, statusConfig)
 	} else {
-		UpdateGitlabStatus(appOptions, statusConfig)
+		err = UpdateGitlabStatus(appOptions, statusConfig)
+		if err != nil {
+			log.Fatalln(err)
+		}
 	}
 }
