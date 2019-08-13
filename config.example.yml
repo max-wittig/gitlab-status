@@ -1,8 +1,5 @@
 ---
 timezone: Europe/Zurich
-default:
-  emoji: evergreen_tree
-  message:
 crons:
   "0 7 * * 1-5":
      emoji: house

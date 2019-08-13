@@ -10,10 +10,10 @@ import (
 )
 
 // ScheduleDaemons schedules the status crons
-func ScheduleDaemons(appOptions *appOptions, statusConfig *Config) {
+func ScheduleDaemons(appOptions *appOptions, statusConfig *Config) error {
 	location, err := time.LoadLocation(statusConfig.Timezone)
 	if err != nil {
-		log.Fatalln("Invalid timezone")
+		return err
 	}
 	cronScheduler := cron.New(cron.WithLocation(location))
 	cronScheduler.Location()
@@ -24,11 +24,12 @@ func ScheduleDaemons(appOptions *appOptions, statusConfig *Config) {
 		status := v
 		_, err := cronScheduler.AddFunc(cronString, func() { SendUpdateRequest(client, &status) })
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 	}
 	for _, entry := range cronScheduler.Entries() {
 		log.Println(entry.Schedule.Next(time.Now()))
 	}
 	cronScheduler.Run()
+	return nil
 }
