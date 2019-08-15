@@ -7,8 +7,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// StatusOptions describe possible parameters in the yaml file
-type StatusOptions struct {
+// Status describe possible parameters in the yaml file
+type Status struct {
 	Emoji   string
 	Message string
 }
@@ -16,8 +16,7 @@ type StatusOptions struct {
 // Config from yaml file
 type Config struct {
 	Timezone string
-	Crons    map[string]StatusOptions
-	Default  StatusOptions
+	Crons    map[string]Status
 }
 
 // ReadConfig reads the config from a yml file

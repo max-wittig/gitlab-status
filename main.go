@@ -51,13 +51,15 @@ func parseOptions() (*appOptions, error) {
 		// Check if path exists
 		if _, err := os.Stat(*configFlag); !os.IsNotExist(err) {
 			aConfig.configPath = *configFlag
+		} else {
+			return nil, errors.New("Config file doesn't exist")
 		}
 	}
 	aConfig.daemon = *daemonFlag
 
 	err := addEnvironmentVariables(&aConfig)
 	if err != nil {
-		log.Fatalln(err)
+		return nil, err
 	}
 	return &aConfig, nil
 }
@@ -65,18 +67,18 @@ func parseOptions() (*appOptions, error) {
 func main() {
 	appOptions, err := parseOptions()
 	if err != nil {
-		log.Fatalln("Config file doesn't exist")
+		log.Fatalln(err)
 	}
 	statusConfig, err := ReadConfig(appOptions.configPath)
 	if err != nil {
 		log.Fatalln("Could not read config")
 	}
 	if appOptions.daemon {
-		ScheduleDaemons(appOptions, statusConfig)
+		err = ScheduleDaemons(appOptions, statusConfig)
 	} else {
 		err = UpdateGitlabStatus(appOptions, statusConfig)
-		if err != nil {
-			log.Fatalln(err)
-		}
+	}
+	if err != nil {
+		log.Fatalln(err)
 	}
 }
