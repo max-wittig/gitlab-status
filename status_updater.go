@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"sort"
 	"time"
@@ -11,14 +10,6 @@ import (
 )
 
 var cronParser = cron.NewParser(cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow | cron.Descriptor)
-
-func getNextCronTime(cron string, now time.Time) (time.Time, error) {
-	cronTime, err := cronParser.Parse(cron)
-	if err != nil {
-		return time.Time{}, errors.New("Invalid cron syntax")
-	}
-	return cronTime.Next(now), nil
-}
 
 // sortedStatus sorts status after nearest occurence
 func sortedStatus(now time.Time, statusCrons *Config) ([]string, error) {
@@ -54,15 +45,6 @@ func findCurrentShouldStatus(statusConfig *Config, now time.Time) (*Status, erro
 	}
 
 	return &foundConfig, nil
-}
-
-func getNow(timezone string) (time.Time, error) {
-	loc, err := time.LoadLocation(timezone)
-	if err != nil {
-		return time.Time{}, err
-	}
-	//set timezone,
-	return time.Now().In(loc), nil
 }
 
 // UpdateGitlabStatus updates the status on Gitlab, based on the Options

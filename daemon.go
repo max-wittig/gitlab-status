@@ -16,7 +16,6 @@ func ScheduleDaemons(appOptions *appOptions, statusConfig *Config) error {
 		return err
 	}
 	cronScheduler := cron.New(cron.WithLocation(location))
-	cronScheduler.Location()
 	client := gitlab.NewClient(nil, appOptions.gitlabToken)
 	client.SetBaseURL(appOptions.gitlabURL)
 	for k, v := range statusConfig.Crons {
